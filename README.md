@@ -4,6 +4,7 @@
 /monetal - diretório do projeto<br/>
 /home - app home<br/>
 /templates - arquivos de template<br/>
+/static - arquivos estáticos<br/>
 <br/>
 <h3>Instalando o gunicorn</h3>
 
@@ -12,7 +13,7 @@
 Criar o arquivo de serviço:<br/>
 <br/>
 <strong>$ sudo vim /etc/systemd/system/[nome-do-site].service</strong>
-<br/>
+<br/><br/>
 [code]<br/>
 [Unit]<br/>
 Description=gunicorn daemon<br/>
@@ -27,7 +28,9 @@ ExecStart=/home/fabio/projetos/monetal-django/p3env/bin/gunicorn --access-logfil
 [Install]<br/>
 WantedBy=multi-user.target<br/>
 [/code]<br/>
-
+<br/>
+<strong>$ sudo service monetal start|stop|restart</strong>
+<br/><br/>
 <h3>Configurando o nginx</h3>
 
 [code]<br/>
