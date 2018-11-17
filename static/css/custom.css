@@ -1,0 +1,17 @@
+/* ----------------------------------------------------------------
+	Custom CSS
+
+	Add all your Custom Styled CSS here for New Styles or
+	Overwriting Default Theme Styles for Better Hanlding Updates
+-----------------------------------------------------------------*/
+
+.conteudo p, .conteudo li {
+	font-size: 18px;
+	text-align: justify;
+	color: #454141;
+}
+
+.cotacao {
+	font-family: 'arial';
+	color: #1ABC9C;
+}
