@@ -5,6 +5,7 @@
 /home - app home<br/>
 /templates - arquivos de template<br/>
 /static - arquivos estáticos<br/>
+/config - arquivos de exemplo de configuração do gunicorn e nginx<br/>
 <br/>
 <h3>Instalando o gunicorn</h3>
 
