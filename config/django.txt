@@ -1,0 +1,167 @@
+Inserindo um break point:
+
+import pdb
+pdb.set_trace()
+
+Vai aparecer um console:
+
+(Pdb)
+
+Digite "l".
+
+(Pdb) dir(request)
+(Pdb) request.POST.get('nome')
+
+---
+
+try:
+	...
+except Exception as e:
+	mensagem = str(e)
+else:
+	mensagem = "Sucesso!"
+
+---
+
+Criar um contato:
+
+contato = {}
+contato['nome'] = request.POST.get('nome')
+contato['email'] = request.POST.get('email')
+Contato.objects.create(**contato)
+
+---
+
+Atribuir True ou False ao resultado de uma checkbox:
+
+checkbox = True if request.POST.get('xxx') == 'on' else False
+
+---
+
+Para colocar no rodapé de um template:
+
+Copyright {% now "Y" %}
+
+---
+
+Usando timedelta para montar queries com filtro por X dias:
+
+Foo.objects.filter(
+	createdate__lte=datetime.datetime.today(), 
+	createdate__gt=datetime.datetime.today()-datetime.timedelta(days=30)
+)
+---
+
+Login no Django:
+
+from django.contrib.auth import authenticate, login
+
+if request.method == 'POST':
+	user = authenticate(username=request.POST['username'],password=request.POST['password'])
+	if user is not None:
+		login(request, user)
+		return redirect('home')
+
+Logout:
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+	logout(request)
+
+
+Página somente para usuários logados:
+
+from django.conf import settings
+from django.shortcuts import redirect
+
+def my_view(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
+ou:
+
+from django.shortcuts import render
+
+def my_view(request):
+    if not request.user.is_authenticated:
+        return render(request, 'myapp/login_error.html')
+
+Também é possível usar um decorator na view:
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+    ...
+
+se o usuário não estiver logado, será redirecionado para settings.LOGIN_URL, passando o path absoluto na query string, ex.: /accounts/login/?next=/polls/3/.
+
+---
+
+Verificar um campo POST:
+
+if request.POST['url'].startswith('http://'):
+	...
+
+---
+
+Processando um arquivo de imagem:
+
+product.icon = request.FILES['icon']
+
+---
+
+Criando campo datetime:
+
+from django.utils importe timezone
+
+product.pub_date = timezone.datetime.now()
+
+---
+
+Usuário que criou o objeto:
+
+product.hunter = request.user
+
+---
+
+MEDIA_URL e MEDIA_ROOT:
+
+Editar o urls.py e adicionar:
+
+from django.conf.urls.statis import static
+
+E em urlpatters = [] adicionar:
+
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+---
+
+Looping em templates:
+
+Dentro de um loop for em templates temos as seguintes variáveis:
+
+forloop.first, forloop.counter, forloop.last
+
+---
+
+Herança de templates:
+
+{% extends 'base.html' %}
+
+{% block 'title' %}
+Contato | {{ block.super }}
+{% endblock %}
+
+Onde block.super é o título do template pai (base.html).
+
+---
+
+Sumário de um texto grande:
+
+def summary(self):
+	return self.body[:100]
+
+---
+
