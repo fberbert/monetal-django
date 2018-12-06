@@ -7,6 +7,24 @@
 /static - arquivos estáticos<br/>
 /config - arquivos de exemplo de configuração do gunicorn e nginx<br/>
 <br/>
+
+<h3>Preparando o ambiente</h3>
+
+<strong>$ python3 -m venv p3env<br/>
+$ source p3env/bin/activate<br/>
+(p3env) $ pip install django</strong>
+<br/><br/>
+
+<h3>Configurando local_settings.py</h3>
+
+Criar o arquivo monetal/local_settings.py com o seguinte conteúdo (ou mude suas configurações locais a seu gosto):
+<br/><br/>
+
+SECRET_KEY = 'cole-aqui-o-seu-hash'
+DEBUG = True
+ALLOWED_HOSTS = ['hostname-do-site']
+<br/><br/>
+
 <h3>Instalando o gunicorn</h3>
 
 <strong>$ pip install gunicorn</strong><br/>
@@ -15,7 +33,6 @@ Criar o arquivo de serviço:<br/>
 <br/>
 <strong>$ sudo vim /etc/systemd/system/[nome-do-site].service</strong>
 <br/><br/>
-[code]<br/>
 [Unit]<br/>
 Description=gunicorn daemon<br/>
 After=network.target<br/>
@@ -28,13 +45,11 @@ ExecStart=/home/fabio/projetos/monetal-django/p3env/bin/gunicorn --access-logfil
 <br/>
 [Install]<br/>
 WantedBy=multi-user.target<br/>
-[/code]<br/>
 <br/>
 <strong>$ sudo service monetal start|stop|restart</strong>
 <br/><br/>
 <h3>Configurando o nginx</h3>
 
-[code]<br/>
 server {<br/>
     listen 80;<br/>
     server_name monetal;<br/>
@@ -50,4 +65,3 @@ server {<br/>
         proxy_pass http://unix:/home/fabio/projetos/monetal-django/monetal.sock;<br/>
     }<br/>
 }<br/>
-[/code]<br/>
