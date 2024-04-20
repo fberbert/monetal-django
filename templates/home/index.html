@@ -54,33 +54,33 @@
 <p data-caption-animate="fadeInUp" data-caption-delay="200">Somos uma empresa especializada em consultoria de investimentos em BITCOIN e criptomoedas. <a href="#section-services" data-scrollto="#section-intro">Clique aqui</a> para conhecer nossos serviços. </p>
 <p>
 <br/>
-Cotação do Bitcoin: <span style="font-size: 30px !important" id="btc"></span></p>
+Cotação do Bitcoin agora: 
+<span style="font-size: 30px !important" id="btc"></span>
+</p>
 
 <script>
-function cotacao() {
-                fetch('https://www.mercadobitcoin.net/api/btc/ticker/')
-                        .then(function(response) {
-                                return response.json();
-                        })
-                        .then(function(data) {
-                                valor = data.ticker.last;
-                                valor = "R$ " + Number(valor).toFixed(2).replace(".", ",");
-                                console.log(valor);
-                                document.getElementById('btc').innerHTML = valor;
-                                document.getElementById('btc2').innerHTML = valor;
-                        })
-                        .catch(function(err) {
-                                console.log("Deu erro: " + err);
-                        });
+async function cotacao(symbol) {
+  fetch(`https://www.mercadobitcoin.net/api/${symbol}/ticker/`)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
+            let valor = data.ticker.last;
+            if (symbol == 'btc') valor = "R$ " + Number(valor).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            if (symbol == 'btc-usdt') valor = "US$ " + Number(valor).toLocaleString("pt-BR", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById(symbol.toLowerCase()).innerHTML = valor;
+        })
+        .catch(function(err) {
+            console.log("Deu erro: " + err);
+        });
 
-        //atualizar em 10 minutos
-        setTimeout(function() {
-                cotacao();
-        }, 600000);
+    // Atualizar em 10 minutos
+    setTimeout(function() {
+        cotacao('btc');
+    }, 600000);
 }
 
-cotacao();
-
+cotacao('btc');
 </script>
 
 </div>
